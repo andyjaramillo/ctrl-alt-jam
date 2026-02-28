@@ -1,0 +1,78 @@
+[gd_scene load_steps=11 format=3 uid="uid://cu1wxxd3vxq1u"]
+
+[ext_resource type="Script" uid="uid://c46t30lb1fcfx" path="res://characters/940_theta.gd" id="1_fn3d8"]
+[ext_resource type="Texture2D" uid="uid://dnqgjkyepvb6g" path="res://assets/sprites/940 Walk Cycle.png" id="1_vy3e5"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fn3d8"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d8dm0"]
+atlas = ExtResource("1_vy3e5")
+region = Rect2(0, 0, 2048, 2048)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t8mly"]
+atlas = ExtResource("1_vy3e5")
+region = Rect2(2048, 0, 2048, 2048)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fsa2s"]
+atlas = ExtResource("1_vy3e5")
+region = Rect2(0, 2048, 2048, 2048)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d0gic"]
+atlas = ExtResource("1_vy3e5")
+region = Rect2(2048, 2048, 2048, 2048)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ekbmd"]
+atlas = ExtResource("1_vy3e5")
+region = Rect2(2048, 0, 2048, 2048)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f5lob"]
+atlas = ExtResource("1_vy3e5")
+region = Rect2(2048, 2048, 2048, 2048)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ekbmd"]
+animations = [{
+"frames": [{
+"duration": 3.0,
+"texture": SubResource("AtlasTexture_d8dm0")
+}, {
+"duration": 3.0,
+"texture": SubResource("AtlasTexture_t8mly")
+}, {
+"duration": 3.0,
+"texture": SubResource("AtlasTexture_fsa2s")
+}, {
+"duration": 3.0,
+"texture": SubResource("AtlasTexture_d0gic")
+}],
+"loop": true,
+"name": &"Crawl",
+"speed": 24.0
+}, {
+"frames": [{
+"duration": 12.0,
+"texture": SubResource("AtlasTexture_ekbmd")
+}, {
+"duration": 6.0,
+"texture": SubResource("AtlasTexture_f5lob")
+}, {
+"duration": 24.0,
+"texture": SubResource("AtlasTexture_ekbmd")
+}, {
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_f5lob")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 24.0
+}]
+
+[node name="940 Theta" type="CharacterBody2D"]
+script = ExtResource("1_fn3d8")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_fn3d8")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.1, 0.1)
+sprite_frames = SubResource("SpriteFrames_ekbmd")
+animation = &"Crawl"
