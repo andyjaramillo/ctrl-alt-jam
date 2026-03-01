@@ -1,20 +1,25 @@
 extends CharacterBody2D
 
-@export var speed = 400  # speed in pixels/sec
-@export var dash_speed = 2400
+@export var speed = 1000  # speed in pixels/sec
+@export var dash_speed = 3000
 
 #@export var rotation_speed = 10.0
 var isdashing = false
 
-@onready var timer = $DashCoolDown
-@onready var anim_sprite = $"940 Theta/AnimatedSprite2D"
+@onready var timer = $DashDuration
+@onready var dash_cooldown_timer = $DashCoolDown
 
+
+@onready var anim_sprite = $"940 Theta/AnimatedSprite2D"
+@onready var audio = $AudioStreamPlayer
+@onready var dash_audio = $AudioStreamPlayer2
+@onready var infest_audio = $AudioStreamPlayer3
 #
 #func _ready() -> void:
 	#anim_sprite.rotation_degrees = 0
 
 
- 
+var can_dash = true
 var is_crawling
 @onready var idle_direction = Vector2(0,-400)
 var direction
@@ -27,6 +32,7 @@ func _physics_process(delta):
 		
 		
 	if !isdashing:
+		dash_audio.stop()
 		if Input.is_action_pressed("up"):
 			is_crawling = true
 			anim_sprite.rotation_degrees = 0 
@@ -68,23 +74,42 @@ func _physics_process(delta):
 			
 		else:
 			anim_sprite.play("Idle")
+			is_crawling = false
 			
-			
-			
-		if Input.is_action_just_pressed("dash"):
+		
+		if Input.is_action_just_pressed("dash") && can_dash:
+			can_dash = false
 			isdashing = true
 			timer.start()
+			dash_cooldown_timer.start()
+	
+			
 	if isdashing:
+		is_crawling = false
 		if velocity == Vector2.ZERO:
 			velocity = idle_direction * dash_speed
 		else: 
 			velocity = direction * dash_speed
 		print(velocity)
+		if dash_audio.get_playback_position() == 0:
+			dash_audio.play()
+	
+	if is_crawling:
+		audio.play(audio.stream.get_length() * randf())
+	else:
+		audio.stop()
+		
 	move_and_slide()
 	
-	print(anim_sprite.global_rotation_degrees)
+
+
+
+func _on_dash_duration_timeout() -> void:
+	isdashing = false
+	
+	
 
 
 func _on_dash_cool_down_timeout() -> void:
-	isdashing = false
+	can_dash = true
 	

@@ -1,7 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://cu1wxxd3vxq1u"]
+[gd_scene load_steps=17 format=3 uid="uid://cu1wxxd3vxq1u"]
 
 [ext_resource type="Script" uid="uid://c46t30lb1fcfx" path="res://characters/940_theta.gd" id="1_fn3d8"]
 [ext_resource type="Texture2D" uid="uid://dnqgjkyepvb6g" path="res://assets/sprites/940 Walk Cycle.png" id="1_vy3e5"]
+[ext_resource type="AudioStream" uid="uid://b1bajhy5c1hwk" path="res://assets/audio/SFX/chchchchch.mp3" id="3_d8dm0"]
+[ext_resource type="AudioStream" uid="uid://dgr4ctb1gieh5" path="res://assets/audio/SFX/AUD_Parasite_Movement_01.wav" id="4_fsa2s"]
+[ext_resource type="AudioStream" uid="uid://bdd0g25sa1a4y" path="res://assets/audio/SFX/AUD_Parasite_HostTakeover_01.wav" id="5_d0gic"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fn3d8"]
 
@@ -66,6 +69,22 @@ animations = [{
 "speed": 24.0
 }]
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_t8mly"]
+random_pitch = 1.1
+random_volume_offset_db = 1.22
+streams_count = 1
+stream_0/stream = ExtResource("3_d8dm0")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ekbmd"]
+streams_count = 1
+stream_0/stream = ExtResource("4_fsa2s")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_f5lob"]
+random_pitch = 1.14
+random_volume_offset_db = 0.38
+streams_count = 1
+stream_0/stream = ExtResource("5_d0gic")
+
 [node name="CharacterBody2D" type="CharacterBody2D"]
 script = ExtResource("1_fn3d8")
 
@@ -78,7 +97,23 @@ shape = SubResource("CapsuleShape2D_fn3d8")
 sprite_frames = SubResource("SpriteFrames_ekbmd")
 animation = &"Crawl"
 
-[node name="DashCoolDown" type="Timer" parent="."]
+[node name="DashDuration" type="Timer" parent="."]
 wait_time = 0.1
 
+[node name="DashCoolDown" type="Timer" parent="."]
+wait_time = 2.0
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_t8mly")
+volume_db = -0.07
+
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_ekbmd")
+volume_db = -9.656
+
+[node name="AudioStreamPlayer3" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_f5lob")
+volume_db = -10.835
+
+[connection signal="timeout" from="DashDuration" to="." method="_on_dash_duration_timeout"]
 [connection signal="timeout" from="DashCoolDown" to="." method="_on_dash_cool_down_timeout"]
