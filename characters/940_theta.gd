@@ -11,7 +11,7 @@ var isdashing = false
 
 #
 #func _ready() -> void:
-	#anim_sprite.rotation = 0
+	#anim_sprite.rotation_degrees = 0
 
 
  
@@ -29,41 +29,41 @@ func _physics_process(delta):
 	if !isdashing:
 		if Input.is_action_pressed("up"):
 			is_crawling = true
-			anim_sprite.rotation = 0 
-			#if Input.is_action_pressed("left"):
-				#anim_sprite.rotation = -45
-			#elif Input.is_action_pressed("right"):
-				#anim_sprite.rotation = 45
+			anim_sprite.rotation_degrees = 0 
+			if Input.is_action_pressed("left"):
+				anim_sprite.rotation_degrees = -45
+			elif Input.is_action_pressed("right"):
+				anim_sprite.rotation_degrees = 45
 			anim_sprite.play("Crawl")
 			
 		elif Input.is_action_pressed("down"): 
 			is_crawling = true
-			anim_sprite.rotation = 180
-			#if Input.is_action_pressed("left"):
-				#anim_sprite.rotation = 225
-			#elif Input.is_action_pressed("right"):
-				#anim_sprite.rotation = 135
+			anim_sprite.rotation_degrees = 180
+			if Input.is_action_pressed("left"):
+				anim_sprite.rotation_degrees = 225
+			elif Input.is_action_pressed("right"):
+				anim_sprite.rotation_degrees = 135
 	  
 			anim_sprite.play("Crawl")
 			
 		elif Input.is_action_pressed("left"): 
 			is_crawling = true
-			anim_sprite.rotation = -90
-			#if Input.is_action_pressed("up"):
-				##print("leftupa")
-				#anim_sprite.rotation = -45
-			#elif Input.is_action_pressed("down"):
-				#anim_sprite.rotation = -135
+			anim_sprite.rotation_degrees = -90
+			if Input.is_action_pressed("up"):
+				#print("leftupa")
+				anim_sprite.rotation_degrees = -45
+			elif Input.is_action_pressed("down"):
+				anim_sprite.rotation_degrees = -135
 
 			anim_sprite.play("Crawl")
 			
 		elif Input.is_action_pressed("right"):  
 			is_crawling = true
-			anim_sprite.rotation= 90
-			#if Input.is_action_pressed("up"):
-				#anim_sprite.rotation = 45
-			#elif Input.is_action_pressed("down"):
-				#anim_sprite.rotation =135	
+			anim_sprite.rotation_degrees = 90
+			if Input.is_action_pressed("up"):
+				anim_sprite.rotation_degrees = 45
+			elif Input.is_action_pressed("down"):
+				anim_sprite.rotation_degrees =135	
 			anim_sprite.play("Crawl")
 			
 		else:
@@ -82,7 +82,7 @@ func _physics_process(delta):
 		print(velocity)
 	move_and_slide()
 	
-	print(velocity)
+	print(anim_sprite.global_rotation_degrees)
 
 
 func _on_dash_cool_down_timeout() -> void:
