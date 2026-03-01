@@ -7,6 +7,8 @@
 [ext_resource type="AudioStream" uid="uid://bdd0g25sa1a4y" path="res://assets/audio/SFX/AUD_Parasite_HostTakeover_01.wav" id="5_d0gic"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fn3d8"]
+radius = 270.0
+height = 858.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_d8dm0"]
 atlas = ExtResource("1_vy3e5")
@@ -76,6 +78,7 @@ streams_count = 1
 stream_0/stream = ExtResource("3_d8dm0")
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ekbmd"]
+playback_mode = 2
 streams_count = 1
 stream_0/stream = ExtResource("4_fsa2s")
 
@@ -89,6 +92,7 @@ stream_0/stream = ExtResource("5_d0gic")
 script = ExtResource("1_fn3d8")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-3, 104)
 shape = SubResource("CapsuleShape2D_fn3d8")
 
 [node name="940 Theta" type="Node2D" parent="."]

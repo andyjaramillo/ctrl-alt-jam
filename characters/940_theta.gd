@@ -32,6 +32,12 @@ func _physics_process(delta):
 		
 		
 	if !isdashing:
+		if can_dash == false:
+			anim_sprite.self_modulate = Color(0.534, 0.85, 0.991, 1.0)
+			speed = 500
+		else:
+			anim_sprite.self_modulate = Color(1,1,1)
+			speed = 1000
 		dash_audio.stop()
 		if Input.is_action_pressed("up"):
 			is_crawling = true
