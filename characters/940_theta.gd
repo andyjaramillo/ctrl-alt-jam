@@ -23,6 +23,11 @@ var can_dash = true
 var is_crawling
 @onready var idle_direction = Vector2(0,-400)
 var direction
+func _ready() -> void:
+	anim_sprite.rotation_degrees = 180
+
+
+
 func _physics_process(delta):
 	
 	direction = Input.get_vector("left", "right", "up", "down")
@@ -119,3 +124,7 @@ func _on_dash_duration_timeout() -> void:
 func _on_dash_cool_down_timeout() -> void:
 	can_dash = true
 	
+
+
+func _on_timer_timeout() -> void:
+	pass # Replace with function body.

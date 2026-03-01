@@ -102,10 +102,10 @@ sprite_frames = SubResource("SpriteFrames_ekbmd")
 animation = &"Crawl"
 
 [node name="DashDuration" type="Timer" parent="."]
-wait_time = 0.1
+wait_time = 0.123
 
 [node name="DashCoolDown" type="Timer" parent="."]
-wait_time = 2.0
+wait_time = 1.4009999999999998
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamRandomizer_t8mly")

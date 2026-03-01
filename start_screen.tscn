@@ -1,32 +1,168 @@
-[gd_scene load_steps=2 format=3 uid="uid://bcqrc57d3q3n4"]
+[gd_scene load_steps=10 format=3 uid="uid://bcqrc57d3q3n4"]
 
 [ext_resource type="Script" uid="uid://30v1rrs8cixu" path="res://main_menu.gd" id="1_ncxyx"]
+[ext_resource type="AudioStream" uid="uid://b31o1mr4ndx0m" path="res://assets/audio/Three-Body.wav" id="2_k1na2"]
+[ext_resource type="Script" uid="uid://yt1khy31nb86" path="res://IntroAudio.gd" id="3_vdywr"]
+[ext_resource type="AudioStream" uid="uid://c8iudp3sv8ib3" path="res://assets/audio/freesound_community-indoor-adult-murmur-small-groupwav-14573.mp3" id="4_cdgt5"]
+[ext_resource type="AudioStream" uid="uid://chsdsrutretek" path="res://assets/audio/SFX/AUD_Parasite_BreakOut_01.wav" id="5_vdywr"]
 
-[node name="Start Screen" type="Node2D"]
+[sub_resource type="FontFile" id="FontFile_k1na2"]
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
 
-[node name="MainMenu" type="Control" parent="."]
+[sub_resource type="LabelSettings" id="LabelSettings_vdywr"]
+font = SubResource("FontFile_k1na2")
+
+[sub_resource type="AudioStreamInteractive" id="AudioStreamInteractive_l67vj"]
+clip_count = 1
+clip_0/name = &"Three Body"
+clip_0/stream = ExtResource("2_k1na2")
+clip_0/auto_advance = 0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_076lj"]
+random_pitch = 1.07
+random_volume_offset_db = 2.37
+streams_count = 1
+stream_0/stream = ExtResource("4_cdgt5")
+
+[node name="MainMenu" type="Control"]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 66.0
-offset_bottom = 40.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_ncxyx")
 
-[node name="StartBtn" type="Button" parent="MainMenu"]
+[node name="RichTextLabel2" type="RichTextLabel" parent="."]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -23.0
-offset_top = -15.5
-offset_right = 23.0
-offset_bottom = 15.5
+offset_left = 178.0
+offset_top = -14.0
+offset_right = 451.0
+offset_bottom = 101.0
 grow_horizontal = 2
 grow_vertical = 2
+bbcode_enabled = true
+text = "Move: WASD
+Dash: Spacebar
+
+Objective: Escape Containment"
+fit_content = true
+autowrap_mode = 0
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -162.0
+offset_top = -97.25
+offset_right = 162.0
+offset_bottom = 97.25
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Case Study: 940-Theta 
+3.1.2010 
+23:55:33:03"
+label_settings = SubResource("LabelSettings_vdywr")
+
+[node name="StartBtn" type="Button" parent="VBoxContainer"]
+layout_mode = 2
 text = "Start
 "
 
-[connection signal="pressed" from="MainMenu/StartBtn" to="MainMenu" method="_on_start_btn_pressed"]
+[node name="CredBtn" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+toggle_mode = true
+text = "Credits"
+
+[node name="QuitBtn" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Quit"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamInteractive_l67vj")
+volume_db = -22.61
+autoplay = true
+script = ExtResource("3_vdywr")
+
+[node name="Murmur" type="AudioStreamPlayer" parent="AudioStreamPlayer"]
+stream = SubResource("AudioStreamRandomizer_076lj")
+
+[node name="BreakOutSFX" type="AudioStreamPlayer" parent="AudioStreamPlayer"]
+stream = ExtResource("5_vdywr")
+volume_db = -6.063
+
+[node name="CredPanel" type="Panel" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -226.0
+offset_top = 103.0
+offset_right = 232.0
+offset_bottom = 314.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CredPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -136.5
+offset_top = -57.5
+offset_right = 136.5
+offset_bottom = 57.5
+grow_horizontal = 2
+grow_vertical = 2
+bbcode_enabled = true
+text = "
+Art: Crazi, Tayonaise
+Music: Tayonaise
+SFX: Dryya
+Programming: Wolfgang, Tayonaise"
+fit_content = true
+autowrap_mode = 0
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Dark" type="ColorRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[connection signal="pressed" from="VBoxContainer/StartBtn" to="." method="_on_start_btn_pressed"]
+[connection signal="toggled" from="VBoxContainer/CredBtn" to="." method="_on_cred_btn_toggled"]
+[connection signal="pressed" from="VBoxContainer/QuitBtn" to="." method="_on_quit_btn_pressed"]
+[connection signal="finished" from="AudioStreamPlayer" to="AudioStreamPlayer" method="_on_finished"]
+[connection signal="finished" from="AudioStreamPlayer/Murmur" to="AudioStreamPlayer" method="_on_murmur_finished"]
+[connection signal="finished" from="AudioStreamPlayer/BreakOutSFX" to="." method="_on_audio_stream_player_2_finished"]

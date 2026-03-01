@@ -1,0 +1,111 @@
+[gd_scene load_steps=10 format=3 uid="uid://bob33ib4yf0j2"]
+
+[ext_resource type="Script" uid="uid://30v1rrs8cixu" path="res://main_menu.gd" id="1_d75mr"]
+[ext_resource type="AudioStream" uid="uid://b31o1mr4ndx0m" path="res://assets/audio/Three-Body.wav" id="2_be1gp"]
+[ext_resource type="Script" uid="uid://yt1khy31nb86" path="res://IntroAudio.gd" id="3_kaxt3"]
+[ext_resource type="AudioStream" uid="uid://c8iudp3sv8ib3" path="res://assets/audio/freesound_community-indoor-adult-murmur-small-groupwav-14573.mp3" id="4_2afhe"]
+[ext_resource type="AudioStream" uid="uid://chsdsrutretek" path="res://assets/audio/SFX/AUD_Parasite_BreakOut_01.wav" id="5_nbj2a"]
+
+[sub_resource type="AudioStreamInteractive" id="AudioStreamInteractive_l67vj"]
+clip_count = 1
+clip_0/name = &"Three Body"
+clip_0/stream = ExtResource("2_be1gp")
+clip_0/auto_advance = 0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_076lj"]
+random_pitch = 1.07
+random_volume_offset_db = 2.37
+streams_count = 1
+stream_0/stream = ExtResource("4_2afhe")
+
+[sub_resource type="FontFile" id="FontFile_k1na2"]
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_vdywr"]
+font = SubResource("FontFile_k1na2")
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_d75mr")
+
+[node name="Dark" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamInteractive_l67vj")
+volume_db = -22.61
+autoplay = true
+script = ExtResource("3_kaxt3")
+
+[node name="Murmur" type="AudioStreamPlayer" parent="AudioStreamPlayer"]
+stream = SubResource("AudioStreamRandomizer_076lj")
+
+[node name="BreakOutSFX" type="AudioStreamPlayer" parent="AudioStreamPlayer"]
+stream = ExtResource("5_nbj2a")
+volume_db = -6.063
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -136.5
+offset_top = -97.0
+offset_right = 136.5
+offset_bottom = 97.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Case Study: 940-Theta 
+3.1.2010 
+23:55:33:03"
+label_settings = SubResource("LabelSettings_vdywr")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "
+Art: Crazi, Tayonaise
+Music: Tayonaise
+SFX: Dryya
+Programming: Wolfgang, Tayonaise"
+fit_content = true
+autowrap_mode = 0
+vertical_alignment = 1
+
+[node name="QuitBtn" type="Button" parent="."]
+layout_mode = 0
+offset_left = 520.0
+offset_top = 460.0
+offset_right = 646.0
+offset_bottom = 517.0
+size_flags_horizontal = 4
+size_flags_vertical = 8
+text = "Quit"
+
+[connection signal="finished" from="AudioStreamPlayer" to="AudioStreamPlayer" method="_on_finished"]
+[connection signal="finished" from="AudioStreamPlayer/Murmur" to="AudioStreamPlayer" method="_on_murmur_finished"]
+[connection signal="finished" from="AudioStreamPlayer/BreakOutSFX" to="." method="_on_audio_stream_player_2_finished"]
+[connection signal="pressed" from="QuitBtn" to="." method="_on_quit_btn_pressed"]
